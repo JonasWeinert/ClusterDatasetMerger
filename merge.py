@@ -25,16 +25,17 @@ def main():
                 return
 
             # Let the user choose the 'inner' and 'outer' sheets
-            inner_sheet = st.selectbox('Choose the inner sheet:', sheet_names)
-            outer_sheet = st.selectbox('Choose the outer sheet:', [name for name in sheet_names if name != inner_sheet])
-
-
-            # Assign dfinner and dfouter based on user selection
-            dfinner = excel_data[inner_sheet]
-            dfouter = excel_data[outer_sheet]
-            if not dfinner.empty and not dfouter.empty:
-                inner_identifier_col = st.selectbox('Choose the common identifier column in the inner sheet:', dfinner.columns)
-                outer_identifier_col = st.selectbox('Choose the common identifier column in the outer sheet:', dfouter.columns)
+            col1, col2 = st.columns(2)
+            with col1:
+                inner_sheet = st.selectbox('Choose the inner sheet:', sheet_names)
+                dfinner = excel_data[inner_sheet]
+                if not dfinner.empty:
+                    inner_identifier_col = st.selectbox('Choose the common identifier column in this inner sheet:', dfinner.columns)
+            with col2:
+                outer_sheet = st.selectbox('Choose the outer sheet:', [name for name in sheet_names if name != inner_sheet])
+                dfouter = excel_data[outer_sheet]
+                if not dfouter.empty:
+                    outer_identifier_col = st.selectbox('Choose the common identifier column in this outer sheet:', dfouter.columns)
 
 
             # Display dataframes in the app
