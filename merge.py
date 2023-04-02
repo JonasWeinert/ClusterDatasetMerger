@@ -37,6 +37,11 @@ def main():
                 if not dfouter.empty:
                     outer_identifier_col = st.selectbox('Choose the common identifier column in this outer sheet:', dfouter.columns)
 
+            if not dfinner.empty and not dfouter.empty and inner_identifier_col and outer_identifier_col:
+                merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
+                st.write('Merged DataFrame:')
+                st.write(merged_df.head())
+
 
             # Display dataframes in the app
             st.write('Inner sheet (dfinner):', inner_sheet)
