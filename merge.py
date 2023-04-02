@@ -10,7 +10,7 @@ def main():
     st.title('Excel Sheet Selector')
 
     uploaded_file = st.file_uploader('Upload your xlsx file', type=['xlsx'])
-    
+
     if uploaded_file is not None:
         try:
             # Load the Excel file
@@ -35,7 +35,7 @@ def main():
             # Display dataframes in the app
             st.write('Inner sheet (dfinner):', inner_sheet)
             st.write(dfinner.head())
-            st.write('Outer sheet (dfouter):', sheet_names[1] if inner_sheet == sheet_names[0] else sheet_names[0])
+            st.write('Outer sheet (dfouter):', outer_sheet)
             st.write(dfouter.head())
 
         except Exception as e:
