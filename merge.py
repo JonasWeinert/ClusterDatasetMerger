@@ -10,7 +10,7 @@ def main():
     st.title('Excel Sheet Selector')
 
     uploaded_file = st.file_uploader('Upload your xlsx file', type=['xlsx'])
-
+    
     if uploaded_file is not None:
         try:
             # Load the Excel file
@@ -19,16 +19,18 @@ def main():
             # Get sheet names
             sheet_names = list(excel_data.keys())
 
-            if len(sheet_names) != 2:
-                st.error('Please upload an Excel file with exactly two sheets.')
+            # Check if there is at least one sheet
+            if len(sheet_names) < 1:
+                st.error('Please upload an Excel file with at least one sheet.')
                 return
 
-            # Let the user choose which sheet is the 'inner sheet'
+            # Let the user choose the 'inner' and 'outer' sheets
             inner_sheet = st.selectbox('Choose the inner sheet:', sheet_names)
+            outer_sheet = st.selectbox('Choose the outer sheet:', [name for name in sheet_names if name != inner_sheet])
 
             # Assign dfinner and dfouter based on user selection
             dfinner = excel_data[inner_sheet]
-            dfouter = excel_data[sheet_names[1] if inner_sheet == sheet_names[0] else sheet_names[0]]
+            dfouter = excel_data[outer_sheet]
 
             # Display dataframes in the app
             st.write('Inner sheet (dfinner):', inner_sheet)
