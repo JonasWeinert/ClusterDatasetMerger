@@ -84,7 +84,7 @@ def merge():
                     st.error(f'0 matches found based on the unique identifier because they store different datatypes ({inner_col_dtype} & {outer_col_dtype}).')
 
         except Exception as e:
-            st.error(f"Error loading files: {e}")
+            st.error(f"Error loading files")
 
 if __name__ == '__main__':
     merge()
