@@ -7,6 +7,16 @@ from file_processing import read_files
 
 st.set_page_config(page_title='Clustered dataset merger', page_icon="💙")
 
+load_css('style.css')
+# Supress streamlit branding
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 lottie_loading_url = "https://assets6.lottiefiles.com/packages/lf20_keazd9nb.json"
 

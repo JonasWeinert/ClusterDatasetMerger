@@ -1,0 +1,5 @@
+.element-container .stCodeBlock {
+    height: 400px;
+    overflow: auto;
+    color: #f0f0f0; /* Light text color */
+}
