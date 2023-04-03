@@ -1,8 +1,16 @@
 import streamlit as st
 import pandas as pd
+import base64
+
+def dataframe_to_csv_download_link(df, filename="merged_dataframe.csv", link_name="Download CSV"):
+    csv = df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()
+    href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">{link_name}</a>'
+    return href
 
 def main():
     st.title('File Selector')
+
 
     # Upload either an Excel file or multiple CSV files
     uploaded_files = st.file_uploader('Upload your Excel or CSV files', type=['xlsx', 'csv'], accept_multiple_files=True)
@@ -46,6 +54,7 @@ def main():
                     st.write('Merged DataFrame:')
                     st.write(merged_df.head())
                     st.dataframe(merged_df)
+                    st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Error loading files: {e}")
