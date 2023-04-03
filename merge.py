@@ -29,11 +29,13 @@ def merge():
 
                 if inner_identifier_col and outer_identifier_col:
                     merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
-                    
-                    # throw error if no matches found
-                    if merged_df[outer_identifier_col].isna().all():
-                            st.error('No matches found based on the unique identifiers.')
+                    # count matches
+                    num_matches = merged_df[outer_identifier_col].count()
+                    # error if no match
+                    if num_matches == 0:
+                        st.error('No matches found based on the unique identifier.')
                     else:
+                        st.success(f'{num_matches} matches made based on the unique identifier.')
                         st.write('Merged Dataset:')
                         st.dataframe(merged_df)
                         st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
