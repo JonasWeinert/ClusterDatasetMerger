@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from utils import dataframe_to_csv_download_link, dataframes_to_excel_download_link
 from file_processing import read_files
 
