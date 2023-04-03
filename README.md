@@ -3,7 +3,7 @@
 
 Check it out [here](https://dataset-merge.streamlit.app/).
 
-Streamlit Data Merger is a web application that allows users to merge two datasets using a common unique identifier. The app supports uploading Excel and CSV files and provides the merged dataset as a downloadable CSV or Excel file with three sheets: outer, inner, and merged data.
+Data Merger is a web application that allows users to merge multi level datasets using a common unique identifier. The app supports uploading Excel and CSV files and provides the merged dataset as a downloadable CSV or Excel file with three sheets: outer, inner, and merged data.
 
 ## Features
 
@@ -19,35 +19,25 @@ Streamlit Data Merger is a web application that allows users to merge two datase
 1.  Clone this repository or download the source code.
     
 2.  Navigate to the project directory and create a virtual environment:
-    
-    bashCopy code
-    
+        
     `python -m venv venv` 
     
 3.  Activate the virtual environment:
     
     -   For Windows:
-        
-        bashCopy code
-        
+                
         `venv\Scripts\activate` 
         
     -   For macOS and Linux:
-        
-        bashCopy code
-        
+                
         `source venv/bin/activate` 
         
 4.  Install the required packages:
-    
-    bashCopy code
-    
+        
     `pip install -r requirements.txt` 
     
 5.  Run the Streamlit app:
-    
-    bashCopy code
-    
+        
     `streamlit run app.py` 
     
 6.  Open the displayed URL in your web browser to access the app.
