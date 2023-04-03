@@ -44,7 +44,7 @@ def merge():
             
                     if inner_identifier_col and outer_identifier_col:
                         with st.spinner("Processing..."):
-                            st_lottie.st_lottie(load_lottie_url(lottie_loading_url), speed=1, width=200, height=200)
+                            #st_lottie.st_lottie(load_lottie_url(lottie_loading_url), speed=1, width=200, height=200)
                         # merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
                             merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left', indicator=True)
 
