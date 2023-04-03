@@ -6,6 +6,9 @@ from utils import dataframe_to_csv_download_link, dataframes_to_excel_download_l
 from file_processing import read_files
 
 st.set_page_config(page_title='Clustered dataset merger', page_icon="💙")
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 load_css('style.css')
 # Supress streamlit branding
