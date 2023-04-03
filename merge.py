@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 from utils import dataframe_to_csv_download_link, dataframes_to_excel_download_link
-from file_processing import read_files
+from file_processing import read_files, load_lottie_url
+
+lottie_loading_url = "https://assets6.lottiefiles.com/packages/lf20_keazd9nb.json"
+
 
 def merge():
     st.title('File Selector')
@@ -32,20 +35,22 @@ def merge():
                 if inner_col_dtype == outer_col_dtype:
             
                     if inner_identifier_col and outer_identifier_col:
-                    # merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
-                        merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left', indicator=True)
+                        with st.spinner("Processing..."):
+                            st_lottie.st_lottie(load_lottie_url(lottie_loading_url), speed=1, width=200, height=200)
+                        # merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
+                            merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left', indicator=True)
 
-                        # count matches
-                        num_matches = (merged_df['_merge'] == 'both').sum()
-                        # error if no match
-                        if num_matches == 0:
-                            st.error('0 matches found based on the unique identifier.')
-                        else:
-                            st.success(f'{num_matches} matches made based on the unique identifier.')
-                            st.write('Merged Dataset:')
-                            st.dataframe(merged_df)
-                            st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
-                            st.markdown(dataframes_to_excel_download_link([dfouter, dfinner, merged_df], ["outer", "inner", "merged"]), unsafe_allow_html=True)
+                            # count matches
+                            num_matches = (merged_df['_merge'] == 'both').sum()
+                            # error if no match
+                            if num_matches == 0:
+                                st.error('0 matches found based on the unique identifier.')
+                            else:
+                                st.success(f'{num_matches} matches made based on the unique identifier.')
+                                st.write('Merged Dataset:')
+                                st.dataframe(merged_df)
+                                st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
+                                st.markdown(dataframes_to_excel_download_link([dfouter, dfinner, merged_df], ["outer", "inner", "merged"]), unsafe_allow_html=True)
                 else:
                     st.error(f'0 matches found based on the unique identifier because they store different datatypes ({inner_col_dtype} & {outer_col_dtype}).')
 
