@@ -29,11 +29,15 @@ def merge():
 
                 if inner_identifier_col and outer_identifier_col:
                     merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
-
-                    st.write('Merged Dataset:')
-                    st.dataframe(merged_df)
-                    st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
-                    st.markdown(dataframes_to_excel_download_link([dfouter, dfinner, merged_df], ["outer", "inner", "merged"]), unsafe_allow_html=True)
+                    
+                    # throw error if no matches found
+                    if merged_df[outer_identifier_col].isna().all():
+                            st.error('No matches found based on the unique identifiers.')
+                    else:
+                        st.write('Merged Dataset:')
+                        st.dataframe(merged_df)
+                        st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
+                        st.markdown(dataframes_to_excel_download_link([dfouter, dfinner, merged_df], ["outer", "inner", "merged"]), unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Error loading files: {e}")
