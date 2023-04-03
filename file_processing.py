@@ -1,7 +1,6 @@
 # file_processing.py
 
 import pandas as pd
-import streamlit_lottie as st_lottie
 import requests
 
 def read_files(uploaded_files):
@@ -18,9 +17,4 @@ def read_files(uploaded_files):
 
     return dataframes
 
-def load_lottie_url(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
 
