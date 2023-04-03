@@ -8,6 +8,19 @@ def dataframe_to_csv_download_link(df, filename="merged_dataframe.csv", link_nam
     href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">{link_name}</a>'
     return href
 
+def dataframes_to_excel_download_link(dfs, sheet_names, filename="dataframes.xlsx", link_name="Download Excel"):
+    output = io.BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+
+    for df, sheet_name in zip(dfs, sheet_names):
+        df.to_excel(writer, sheet_name=sheet_name, index=False)
+
+    writer.save()
+    excel_data = output.getvalue()
+    b64 = base64.b64encode(excel_data).decode()
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">{link_name}</a>'
+    return href
+
 def main():
     st.title('File Selector')
 
@@ -38,12 +51,6 @@ def main():
             dfinner = dataframes[inner_file]
             dfouter = dataframes[outer_file]
 
-            # Display dataframes in the app
-            st.write('Inner file or sheet (dfinner):', inner_file)
-            st.write(dfinner.head())
-            st.write('Outer file or sheet (dfouter):', outer_file)
-            st.write(dfouter.head())
-
             if not dfinner.empty and not dfouter.empty:
                 inner_identifier_col = st.selectbox('Choose the common identifier column in the inner file or sheet:', dfinner.columns)
                 outer_identifier_col = st.selectbox('Choose the common identifier column in the outer file or sheet:', dfouter.columns)
@@ -51,10 +58,10 @@ def main():
                 if inner_identifier_col and outer_identifier_col:
                     merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
 
-                    st.write('Merged DataFrame:')
-                    st.write(merged_df.head())
+                    st.write('Merged Dataset:')
                     st.dataframe(merged_df)
                     st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
+                    st.markdown(dataframes_to_excel_download_link([dfouter, dfinner, merged_df], ["outer", "inner", "merged"]), unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Error loading files: {e}")
