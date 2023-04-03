@@ -28,9 +28,11 @@ def merge():
                 outer_identifier_col = st.selectbox('Choose the common identifier column in the outer file or sheet:', dfouter.columns)
 
                 if inner_identifier_col and outer_identifier_col:
-                    merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
+                   # merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
+                    merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left', indicator=True)
+
                     # count matches
-                    num_matches = merged_df[outer_identifier_col].notna().sum()
+                    num_matches = (merged_df['_merge'] == 'both').sum()
                     # error if no match
                     if num_matches == 0:
                         st.error('No matches found based on the unique identifier.')
