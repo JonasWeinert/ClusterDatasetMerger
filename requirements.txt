@@ -4,3 +4,4 @@ streamlit
 numpy
 xlsxwriter
 streamlit-lottie
+requests

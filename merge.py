@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
+import streamlit_lottie as st_lottie
+import requests
 from utils import dataframe_to_csv_download_link, dataframes_to_excel_download_link
 from file_processing import read_files
-import streamlit_lottie as st_lottie
-
 
 lottie_loading_url = "https://assets6.lottiefiles.com/packages/lf20_keazd9nb.json"
 
