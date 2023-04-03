@@ -45,6 +45,7 @@ def main():
 
                     st.write('Merged DataFrame:')
                     st.write(merged_df.head())
+                    st.dataframe(merged_df)
 
         except Exception as e:
             st.error(f"Error loading files: {e}")
