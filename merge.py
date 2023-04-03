@@ -6,7 +6,6 @@ from file_processing import read_files
 def merge():
     st.title('File Selector')
 
-
     # Upload either an Excel file or multiple CSV files
     uploaded_files = st.file_uploader('Upload your Excel or CSV files', type=['xlsx', 'csv'], accept_multiple_files=True)
 
@@ -27,21 +26,28 @@ def merge():
                 inner_identifier_col = st.selectbox('Choose the common identifier column in the inner file or sheet:', dfinner.columns)
                 outer_identifier_col = st.selectbox('Choose the common identifier column in the outer file or sheet:', dfouter.columns)
 
-                if inner_identifier_col and outer_identifier_col:
-                   # merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
-                    merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left', indicator=True)
+                inner_col_dtype = dfinner[inner_identifier_col].dtype
+                outer_col_dtype = dfouter[outer_identifier_col].dtype
 
-                    # count matches
-                    num_matches = (merged_df['_merge'] == 'both').sum()
-                    # error if no match
-                    if num_matches == 0:
-                        st.error('No matches found based on the unique identifier.')
-                    else:
-                        st.success(f'{num_matches} matches made based on the unique identifier.')
-                        st.write('Merged Dataset:')
-                        st.dataframe(merged_df)
-                        st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
-                        st.markdown(dataframes_to_excel_download_link([dfouter, dfinner, merged_df], ["outer", "inner", "merged"]), unsafe_allow_html=True)
+                if inner_col_dtype == outer_col_dtype:
+            
+                    if inner_identifier_col and outer_identifier_col:
+                    # merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left')
+                        merged_df = pd.merge(dfinner, dfouter, left_on=inner_identifier_col, right_on=outer_identifier_col, how='left', indicator=True)
+
+                        # count matches
+                        num_matches = (merged_df['_merge'] == 'both').sum()
+                        # error if no match
+                        if num_matches == 0:
+                            st.error('0 matches found based on the unique identifier.')
+                        else:
+                            st.success(f'{num_matches} matches made based on the unique identifier.')
+                            st.write('Merged Dataset:')
+                            st.dataframe(merged_df)
+                            st.markdown(dataframe_to_csv_download_link(merged_df), unsafe_allow_html=True)
+                            st.markdown(dataframes_to_excel_download_link([dfouter, dfinner, merged_df], ["outer", "inner", "merged"]), unsafe_allow_html=True)
+                else:
+                    st.error(f'0 matches found based on the unique identifier because they store different datatypes ({inner_col_dtype} & {outer_col_dtype}).')
 
         except Exception as e:
             st.error(f"Error loading files: {e}")
