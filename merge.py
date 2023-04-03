@@ -10,6 +10,22 @@ st.set_page_config(page_title='Clustered dataset merger', page_icon="💙")
 
 lottie_loading_url = "https://assets6.lottiefiles.com/packages/lf20_keazd9nb.json"
 
+with st.sidebar:
+    st.title('Need more specialised help?')
+    st.sidebar.write("")
+    st.markdown('##### To get specialised advice and assistance on your ODK and/or Stata projects, reach out via: ')
+    st.markdown('[LinkedIn](https://www.linkedin.com/in/jweinert1997/)')
+    st.markdown('[Github](https://github.com/JonasWeinert/)')
+    st.markdown('[Email](emailto:jnas.weinert@gmail.com)')
+    st.markdown('---')
+    st.header('This project')
+    st.markdown('- [Request a feature](https://github.com/JonasWeinert/ClusterDatasetMerger/issues)')
+    st.markdown('- [Contribute on GitHub](https://github.com/JonasWeinert/ClusterDatasetMerger/)')
+    st.markdown('---')
+    st.header('Was this helpful to you? ')
+    st.markdown('- [Buy me a coffee](#)')
+    st.markdown('---')
+
 def load_lottie_url(url: str):
     r = requests.get(url)
     if r.status_code != 200:
@@ -19,7 +35,7 @@ def load_lottie_url(url: str):
 
 def merge():
     st.title('Dataset merger')
-    st.markdown('This website merges two datasets in long format. While it was developed to merge different-level (or repeated) datasets like household data ([see here for an example](https://dhsprogram.com/data/Merging-datasets.cfm)), you can also merge any other two datasets in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb)') # First paragraph
+    st.markdown('This website merges two datasets in long format. While it was developed to merge different-level (or repeated) datasets like household data ([see here for an example](https://dhsprogram.com/data/Merging-datasets.cfm)), you can also merge any other two datasets in [long format](https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb).') # First paragraph
 
 
     # Upload either an Excel file or multiple CSV files
