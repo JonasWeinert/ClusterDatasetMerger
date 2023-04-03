@@ -1,6 +1,8 @@
 
 # Data Merger
 
+Check it out [here](https://dataset-merge.streamlit.app/).
+
 Streamlit Data Merger is a web application that allows users to merge two datasets using a common unique identifier. The app supports uploading Excel and CSV files and provides the merged dataset as a downloadable CSV or Excel file with three sheets: outer, inner, and merged data.
 
 ## Features
