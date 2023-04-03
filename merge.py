@@ -1,28 +1,8 @@
 import streamlit as st
-import pandas as pd
-import base64
-import io
+from utils import dataframe_to_csv_download_link, dataframes_to_excel_download_link
+from file_processing import read_files
 
-def dataframe_to_csv_download_link(df, filename="merged_dataframe.csv", link_name="Download CSV"):
-    csv = df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">{link_name}</a>'
-    return href
-
-def dataframes_to_excel_download_link(dfs, sheet_names, filename="dataframes.xlsx", link_name="Download Excel"):
-    output = io.BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-
-    for df, sheet_name in zip(dfs, sheet_names):
-        df.to_excel(writer, sheet_name=sheet_name, index=False)
-
-    writer.save()
-    excel_data = output.getvalue()
-    b64 = base64.b64encode(excel_data).decode()
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="{filename}">{link_name}</a>'
-    return href
-
-def main():
+def merge():
     st.title('File Selector')
 
 
@@ -31,17 +11,7 @@ def main():
 
     if uploaded_files:
         try:
-            dataframes = {}
-
-            # Check if the uploaded files are Excel or CSV
-            if uploaded_files[0].type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                if len(uploaded_files) != 1:
-                    st.error('Please upload only one Excel file.')
-                else:
-                    excel_file = pd.read_excel(uploaded_files[0], sheet_name=None)
-                    dataframes = {f"Sheet {name}": df for name, df in excel_file.items()}
-            else:
-                dataframes = {f.name: pd.read_csv(f) for f in uploaded_files}
+            dataframes = read_files(uploaded_files)
 
             # Let the user choose the 'inner' and 'outer' dataframes
             file_names = list(dataframes.keys())
@@ -68,4 +38,4 @@ def main():
             st.error(f"Error loading files: {e}")
 
 if __name__ == '__main__':
-    main()
+    merge()
