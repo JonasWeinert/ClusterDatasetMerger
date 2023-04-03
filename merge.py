@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import base64
 import io
+import xlsxwriter
 
 def dataframe_to_csv_download_link(df, filename="merged_dataframe.csv", link_name="Download CSV"):
     csv = df.to_csv(index=False)
