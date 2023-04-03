@@ -71,5 +71,3 @@ Streamlit Data Merger is a web application that allows users to merge two datase
 -   requests
 
 ----------
-
-This README file provides a brief overview of your app, its features, installation instructions, usage information, and a list of dependencies. You can customize the content according to your requirements and add any additional information as needed.
